@@ -21,9 +21,16 @@ O teste é formado por 3 etapas (GWT - AAA):
 * Act
 * Assert
 
-'''
+xUnit Patterns
+
+- Setup - Dado
+- Exercise - Quando
+- Verify - Então
+- TearDown - "Desmonta tudo antes que seja tarde" rsrs
 
 '''
+
+''' 
 RESPOSTA DE RESUMO
 
 . Passou
@@ -79,5 +86,42 @@ def test_quando_brincadeira_receber_10_entao_deve_retornar_goiabada():
 def test_quando_brincadeira_receber_20_entao_deve_retornar_goiabada():
     
     assert brincadeira(20) == 'goiabada'    
+    
+@mark.skip(reason='Não vai rodar, pq ainda não implementei')    
+def test_quando_brincadeira_receber_menor_do_que_1_entao_deve_retornar_None():
+    
+    assert brincadeira(-2) == 'goiabada'
+    
+@mark.xfail
+def test_xfail_1():
+    assert brincadeira(20) != 'goiabada'
+    
+import sys
+    
+@mark.xfail(sys.platform == 'win32')
+def test_xfail_windows():
+    assert brincadeira(20) == 'goiabada'
+    
 
+@mark.skipif(sys.platform == 'win32')
+def test_xfail_windows_skip():
+    assert brincadeira(20) == 'goiabada'                    
 
+@mark.parametrizado
+@mark.parametrize(
+    'entrada',
+    [3,6,9,12,18]
+)
+def test_brincadeira_deve_retornar_queijo_com_multiplos_de_3(entrada):
+    
+    assert brincadeira(entrada) == 'queijo'
+    
+    
+# @mark.parametrizado
+# @mark.parametrize(
+#     'entrada, esperado',
+#     [(1,1), (2,2), (3, 'queijo'), (4,4), (5,'goiabada')]
+# )
+# def test_brincadeira_deve_retornar_valor_esperado(entrada, esperado):
+    
+#     assert brincadeira(entrada) == esperado    
